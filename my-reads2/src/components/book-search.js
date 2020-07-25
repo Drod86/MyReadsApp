@@ -1,14 +1,31 @@
 import React, {Component} from 'react';
+import * as BooksAPI from '../BooksAPI';
 
 class BookSearch extends Component {
 	state={
-		query: ''
+		query: '',
+		catalog: []
 	}
+
+	searchCatalog = (query) => {
+    BooksAPI.search(query)
+    .then(catalog => {
+    	this.setState((prevState) => ({
+    		catalog
+    	}))
+    })
+  	}
 
 	updateQuery = (query) => {
 		this.setState(curState => ({
 			query: query
 		}))
+		BooksAPI.search(query)
+    .then(catalog => {
+    	this.setState((prevState) => ({
+    		catalog
+    	}))
+    })
 	}
 
 	clearQuery = () => {
@@ -18,15 +35,12 @@ class BookSearch extends Component {
 	}
 
 	render() {
-		const byTitle = this.state.query === ''
+		const byTitle = this.state.query === '' || this.state.catalog === undefined
 			? this.props.books
-			: this.props.books.filter((b) => (
-				b.title.toLowerCase().includes(this.state.query.toLowerCase())
-			))
-		const categories = this.props.books.filter(b => b.categories).map(b => b.categories).map(c => c[0].toLowerCase()).filter(c => c === this.state.query.toLowerCase()) ;
+			: this.state.catalog.error ? [this.state.catalog.error] : this.state.catalog
 		return(
 			<div>
-			{console.log(categories)}
+			{console.log(this.state.catalog)}
 				<input
 				className='search-books'
 				type='text'
@@ -35,9 +49,20 @@ class BookSearch extends Component {
 				onChange={event => this.updateQuery(event.target.value)}
 				/>
 				<button onClick={event => this.clearQuery()}>clear</button>
-				<div>
-				{byTitle.map(book => <p key={book.title} >{book.title}</p>)}
-				{categories.map(book => <p key={book.title} >{book.title}</p>)}
+				<div className='book-search' style={{display: 'flex', flexFlow: 'row wrap', justifyContent: 'space-around'}}>
+				{
+					byTitle.map(book => {
+						return (book !== 'empty query')
+						?  (
+							<div key={(book.id) ? book.id : this.state.catalog.error} style={{width: '100px'}}>
+							{console.log(book)}
+								<p>{book.title}</p>
+								<img alt={book.title} src={(book.imageLinks) ? book.imageLinks.smallThumbnail : ''} />
+							</div>
+						   )
+						:  (<div>'No books match your query'</div>)
+					})
+				}
 				</div>
 			</div>
 		)
