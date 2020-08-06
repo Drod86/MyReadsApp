@@ -1,12 +1,15 @@
 import React from 'react';
 import MyReadsHeader from '../components/my-reads-header';
-import BookSearch from '../components/book-search';
+import BookSearchFeature from '../components/book-search-feature';
+import Arrow from '../imgs/arrow.png';
+import '../App.css';
+
 
 const SearchPage = (props) => {
 	return(
-		<div>
-			<MyReadsHeader linkName={'Home'} altText={'arrow icon'} imgSrcUrl={'arrow.png'} />
-			<BookSearch books={props.books}/>
+		<div className='search-page'>
+			<MyReadsHeader linkName={'Home'} altText={'arrow icon'} imgSrcUrl={Arrow} onNavigate={props.onNavigate}/>
+			<BookSearchFeature books={props.books} updateBooks={props.updateBooks}/>
 		</div>
 	)
 }

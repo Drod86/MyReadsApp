@@ -1,38 +1,83 @@
-.App {
-  text-align: center;
+.my-reads {
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.content {
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.footer {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	color: white;
+	background-color: black;
+	height: 15vh;
+	position: fixed;
+  	left: 0;
+  	bottom: 0;
+  	width: 100%;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.footer p {
+	padding: 2px;
+	margin: 0px;
+
 }
 
-.App-link {
-  color: #61dafb;
+.footer-link {
+	font-size: .9em;
+	border: 1px solid white;
+	border-radius: 3px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.footer-link:hover {
+	font-size: 1em;
+}
+
+footer .currently:hover {
+	color: rgba(0, 250, 250, 1);
+	border: 1px solid rgba(0, 250, 250, 1);
+}
+
+footer .wantTo:hover {
+	color: rgba(250, 0, 250, 1);
+	border: 1px solid rgba(250, 0, 250, 1);
+}
+
+footer ._read:hover {
+	color: rgba(250, 250, 0, 1);
+	border: 1px solid rgba(250, 250, 0, 1);
+}
+
+.footer-info {
+	font-size: .7em;
+}
+
+.footer-info a {
+	color: white;
+}
+
+.footer-info a:hover {
+	color: rgba(250, 0, 250, 1);
+}
+
+/* main-page */
+
+.main-page {
+	width: 100%;
+}
+
+.book-shelves {
+	position: relative;
+	margin: 1.5vw 1vw;
+
+}
+
+
+/* search-pag */
+
+.search-page {
+	width: 100%;
 }

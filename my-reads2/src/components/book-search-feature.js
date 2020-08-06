@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import * as BooksAPI from '../BooksAPI';
 import ListSearch from './list-search';
+import QuerySuggestion from './query-suggestion';
+import './components.css';
 
-class BookSearch extends Component {
+class BookSearchFeature extends Component {
 	state={
 		query: '',
 		catalog: [],
@@ -10,13 +12,20 @@ class BookSearch extends Component {
 		display: 'none'
 	}
 
-	searchCatalog = (query) => {
-    BooksAPI.search(query)
-    .then(catalog => {
-    	this.setState((prevState) => ({
+	componentDidMount() {
+		(this.state.query === '')
+		? BooksAPI.search('a')
+    		.then(catalog => {
+    		this.setState((prevState) => ({
     		catalog
-    	}))
-    })
+    		}))
+    	  })
+    	: BooksAPI.search(this.state.query)
+    		.then(catalog => {
+    		this.setState((prevState) => ({
+    		catalog
+    		}))
+    	  })
   	}
 
 	updateQuery = (query) => {
@@ -34,6 +43,7 @@ class BookSearch extends Component {
 	    		display: ''
 	    	})
     	} else {
+    		this.updateCatalog();
     		this.setState({
     			display: 'none'
     		})
@@ -48,27 +58,40 @@ class BookSearch extends Component {
 		this.setState({
     			display: 'none'
     		})
+		this.updateCatalog();
+
+	}
+
+	updateCatalog = (query = 'a') => {
+		BooksAPI.search(query)
+	    	.then(catalog => {
+		    	this.setState((prevState) => ({
+		    		catalog
+		    	}))
+	    	})
 	}
 
 	render() {
 		return(
-			<div>
-				<input
-				className='search-books'
-				type='text'
-				placeholder='Search to Add'
-				value={this.state.query}
-				onChange={event => this.updateQuery(event.target.value)}
-				/>
-
-				<button onClick={event => this.clearQuery()}>clear</button>
-				<div style={{position: 'relative'}}>
-				{this.state.terms.filter(term => term.toLowerCase().startsWith(this.state.query)).map(term => <li key={term} onClick={event => this.updateQuery(term)} style={{listStyleType: 'none', display: this.state.display, zIdex: '2'}}>{term}</li>)}
+			<div className='book-search-feature'>
+				<div className='search-bar'>
+					<input
+					className='search-books'
+					type='text'
+					placeholder='Search to Add'
+					value={this.state.query}
+					onChange={event => this.updateQuery(event.target.value.toLowerCase())}
+					onKeyPress={event => (event.keyCode === 8) && this.updateCatalog(event.target.value.toLowerCase())}
+					/>
+					<button className='clear-search-button' onClick={event => this.clearQuery()}>clear</button>
+					{this.state.query !== '' && !this.state.terms.includes(this.state.query) && !this.state.catalog.error && (
+					<QuerySuggestion terms={this.state.terms} query={this.state.query} display={this.state.display} updateQuery={this.updateQuery}/>
+					)}
 				</div>
-				<ListSearch query={this.state.query} list={this.state.catalog} books={this.props.books}/>
+				<ListSearch query={this.state.query} catalog={this.state.catalog} updateCatalog={this.updateCatalog} books={this.props.books} updateBooks={this.props.updateBooks}/>
 			</div>
 		)
 	}
 
 }
-export default BookSearch;
+export default BookSearchFeature;
