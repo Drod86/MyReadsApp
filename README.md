@@ -4,4 +4,4 @@ This app will list and display books I am currently reading, have read and would
 Instruction:
 1. clone repository
 2. cd into my-reads2
-3. yarn start
+3. npm or yarn start
