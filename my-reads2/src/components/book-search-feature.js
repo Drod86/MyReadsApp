@@ -78,7 +78,7 @@ class BookSearchFeature extends Component {
 					<input
 					className='search-books'
 					type='text'
-					placeholder='Search to Add'
+					placeholder='Search Catalog to Add Books to Shelves'
 					value={this.state.query}
 					onChange={event => this.updateQuery(event.target.value.toLowerCase())}
 					onKeyPress={event => (event.keyCode === 8) && this.updateCatalog(event.target.value.toLowerCase())}

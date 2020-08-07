@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 import './components.css';
 
+/*
+	This feature is a suggestion.
+	I cannot add persistant state without
+	access the the API.
+*/
+
+
+
 class ProgressMeter extends Component {
 	state = {
 		currentPage: 0,

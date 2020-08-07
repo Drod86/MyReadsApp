@@ -27,13 +27,15 @@
 }
 
 .footer-link {
+	color: white;
 	font-size: .9em;
-	border: 1px solid white;
 	border-radius: 3px;
+	padding: 3px;
 }
 
 .footer-link:hover {
 	font-size: 1em;
+	text-decoration: none;
 }
 
 footer .currently:hover {
@@ -52,7 +54,7 @@ footer ._read:hover {
 }
 
 .footer-info {
-	font-size: .7em;
+	font-size: .6em;
 }
 
 .footer-info a {

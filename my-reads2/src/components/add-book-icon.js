@@ -1,13 +1,18 @@
 import React from 'react';
 import './components.css';
+import { Link } from 'react-router-dom';
 
 const AddBookIcon = (props) => {
 	return(
-		<div className='add-book-box' style={{ display: `${props.display}`, justifyContent: 'space-around', alignItems: 'center'}}>
+		<Link
+			to='/search'
+			className='add-book-box'
+			style={{ display: `${props.display}`}}
+		>
 			<div className='add-book-circle'>
-				<div className='add-book-plus-sign' onClick={event => props.onNavigate('Search')}>+</div>
+				<div className='add-book-plus-sign'>+</div>
 			</div>
-		</div>
+		</Link>
 	)
 }
 

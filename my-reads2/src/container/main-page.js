@@ -3,6 +3,7 @@ import MyReadsHeader from '../components/my-reads-header';
 import BookShelf from '../components/book-shelf';
 import SearchIcon from '../imgs/magnifying-glass.png';
 import '../App.css';
+import { Route } from 'react-router-dom';
 
 class MainPage extends Component {
 	state ={
@@ -19,28 +20,35 @@ class MainPage extends Component {
 		const {books, updateBooks} = this.props
 		return(
 			<div className='main-page'>
-				<MyReadsHeader linkName={'Search'} altText={'Magnifying glass icon'} imgSrcUrl={SearchIcon} onNavigate={this.props.onNavigate}/>
-				{this.state.active === 'currentlyReading' && (
+				<MyReadsHeader linkName={'Search Catalog'} altText={'Magnifying glass icon'} imgSrcUrl={SearchIcon} path={'/search'}/>
+				<Route exact path={'/'} render={() => (
 					<div className='book-shelves'>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
 					</div>
-				)}
-				{this.state.active === 'wantToRead' && (
+				)} />
+				<Route path={'/shelf/currentlyreading'} render={() => (
 					<div className='book-shelves'>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
 					</div>
-				)}
-				{this.state.active === 'read' && (
+				)} />
+				<Route path={'/shelf/wanttoread'} render={() => (
+					<div className='book-shelves'>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
+						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
+					</div>
+				)} />
+				<Route path={'/shelf/read'} render={() => (
 					<div className='book-shelves'>
 						<BookShelf books={books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
 						<BookShelf books={books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
 						<BookShelf books={books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
 					</div>
-				)}
+				)} />
 
 			</div>
 		)
