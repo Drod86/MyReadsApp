@@ -1,10 +1,34 @@
+
+/* App Body */
 .my-reads {
+	cursor: pointer;
+}
+
+/* pages shelf - hold the routes to page UIs - currently now styles to apply */
+
+.pages {
 
 }
 
-.content {
+/* main-page */
+
+.main-page {
+	width: 100%;
+}
+
+.book-shelves {
+	position: relative;
+	margin: 1.5vw 1vw;
 
 }
+
+/* search-page */
+
+.search-page {
+	width: 100%;
+}
+
+/* footer */
 
 .footer {
 	display: flex;
@@ -12,11 +36,13 @@
 	align-items: center;
 	color: white;
 	background-color: black;
-	height: 15vh;
+	height: 10vh;
 	position: fixed;
   	left: 0;
   	bottom: 0;
   	width: 100%;
+  	overflow-y:scroll;
+    overflow-x:hidden;
 
 }
 
@@ -54,7 +80,8 @@ footer ._read:hover {
 }
 
 .footer-info {
-	font-size: .6em;
+	font-size: 1.5vw;
+	line-height: 1.5vw;
 }
 
 .footer-info a {
@@ -63,23 +90,4 @@ footer ._read:hover {
 
 .footer-info a:hover {
 	color: rgba(250, 0, 250, 1);
-}
-
-/* main-page */
-
-.main-page {
-	width: 100%;
-}
-
-.book-shelves {
-	position: relative;
-	margin: 1.5vw 1vw;
-
-}
-
-
-/* search-pag */
-
-.search-page {
-	width: 100%;
 }

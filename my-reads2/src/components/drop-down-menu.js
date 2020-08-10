@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import './components.css';
 
-
-
 class DropDownMenu extends Component {
 	state = {
 		display: 'none',
-		shelves: ['wantToRead', 'currentlyReading', 'read', 'none'],
 	}
 
 	updateDisplay = (bool) => {
@@ -20,24 +17,28 @@ class DropDownMenu extends Component {
 	}
 
 	render() {
+		const shelves = ['wantToRead', 'currentlyReading', 'read', 'none']
+		const { display } = this.state
+		const { updateBooks, book, selectShelf} = this.props
 		return(
-			<div className='drop-down-menu'>
-				<button className='drop-down-button' onClick={event => (this.state.display === 'none') ? this.updateDisplay(true) : this.updateDisplay(false)}>shelf</button>
-				<div className='drop-down-list-container' style={{display: this.state.display}} onClick={event => this.props.updateBooks()}>
-					{this.state.shelves.map(shelf => {
-						if (this.props.book.shelf === shelf) {
+			<div className='drop-down-menu' >
+				<button className='drop-down-button' onClick={event => (display === 'none') ? this.updateDisplay(true) : this.updateDisplay(false)}>shelf</button>
+				<div className='drop-down-list-container' style={{display: display}} onClick={event => updateBooks()} >
+					<div className='drop-down-close-menu' onClick={event => this.updateDisplay(false)}>x</div>
+					{shelves.map(shelf => {
+						if (book.shelf === shelf) {
 							return <li key={`${shelf}Math.random()`} className='book-drop-down-selected-shelf' onClick={event =>{
-								this.props.selectShelf(this.props.book, shelf);
+								selectShelf(book, shelf);
 								this.updateDisplay(false);
 							}}>{shelf}</li>
-						} else if (this.props.book.shelf === undefined && shelf === 'none') {
+						} else if (book.shelf === undefined && shelf === 'none') {
 							return <li className='no-shelf' key={`${shelf}Math.random()`} onClick={event =>{
-								this.props.selectShelf(this.props.book, shelf);
+								selectShelf(this.props.book, shelf);
 								this.updateDisplay(false);
 							}}>{shelf}</li>
 						} else {
 							return <li key={`${shelf}Math.random()`} onClick={event =>{
-								this.props.selectShelf(this.props.book, shelf);
+								selectShelf(book, shelf);
 								this.updateDisplay(false);
 							}}>{shelf}</li>
 						}

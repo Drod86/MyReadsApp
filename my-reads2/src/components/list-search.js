@@ -1,18 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import BookItem from './book-item';
 import './components.css';
 
-class ListSearch extends Component {
-
-
-	componentDidMount(){
-		(this.props.query === '')
-		? this.props.updateCatalog()
-		: this.props.updateCatalog(this.props.query)
-	}
-
-	render(){
-	const { query, catalog, books } = this.props
+const ListSearch = (props) => {
+	const { query, catalog, books } = props
 
 	const renderCatalog = () => {
 		// create array of queried books isbns or id, filtering out duplicates
@@ -26,7 +17,6 @@ class ListSearch extends Component {
 				return (b.hasOwnProperty('industryIdentifiers'))
 				? (a.industryIdentifiers[0].identifier === b.industryIdentifiers[0].identifier) && b
 				: (a.id === b.id) && b
-
 			}, B[0])
 			// compare current catalog book with bookshelf books and exchange books already shelved into the UI catalog
 			const shelved = books.filter(b => b.id === c.id)
@@ -42,15 +32,15 @@ class ListSearch extends Component {
 				: renderCatalog()
 	return(
 		<div>
-			{catalog !== [] && (
+			{catalog !== [] && ( // displays when the catalog is not empty
 				<div className='list-search'>
 						{	// map produced catalog and produce UI
 							byTitle.map(book => {
 								return (book !== 'empty query')
-								?  (<BookItem key={(book.id) ? book.id : book.title} book={book} updateBooks={this.props.updateBooks}/>)
+								?  (<BookItem key={(book.id) ? book.id : book.title} book={book} updateBooks={props.updateBooks}/>)
 								:  (query !== '')
 									? (<div className='no-query-msg' key={Date.now()}>"No books match your query"</div>)
-									: this.props.updateCatalog();
+									: props.updateCatalog();
 							})
 						}
 				</div>
@@ -58,6 +48,6 @@ class ListSearch extends Component {
 		</div>
 	)
 }
-}
+
 
 export default ListSearch;

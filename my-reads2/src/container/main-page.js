@@ -1,58 +1,37 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Route } from 'react-router-dom';
 import MyReadsHeader from '../components/my-reads-header';
-import BookShelf from '../components/book-shelf';
+import Shelves from '../components/shelves';
 import SearchIcon from '../imgs/magnifying-glass.png';
 import '../App.css';
-import { Route } from 'react-router-dom';
 
-class MainPage extends Component {
-	state ={
-		active: 'currentlyReading'
-	}
 
-	setActive = (shelf) => {
-		this.setState((curState) => ({
-			active: shelf
-		}))
-	}
-
-	render(){
-		const {books, updateBooks} = this.props
+/* Container component holds header with link to search page & Routes to url path specific UI of book shelves) */
+const MainPage =(props) => {
+		const {books, updateBooks} = props
+		const path = ['/', '/shelf/currentlyreading', '/shelf/wanttoread', '/shelf/read']
 		return(
 			<div className='main-page'>
+				{/* header with link to search page*/}
 				<MyReadsHeader linkName={'Search Catalog'} altText={'Magnifying glass icon'} imgSrcUrl={SearchIcon} path={'/search'}/>
-				<Route exact path={'/'} render={() => (
-					<div className='book-shelves'>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
-					</div>
+				{/*Default Display @ '/' */}
+				<Route exact path={path[0]} render={() => (
+					<Shelves path={path[0]} books={books} updateBooks={updateBooks}/>
 				)} />
-				<Route path={'/shelf/currentlyreading'} render={() => (
-					<div className='book-shelves'>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
-					</div>
+				{/* displays currently reading shelf*/}
+				<Route path={path[1]} render={() => (
+					<Shelves path={path[1]} books={books} updateBooks={updateBooks}/>
 				)} />
-				<Route path={'/shelf/wanttoread'} render={() => (
-					<div className='book-shelves'>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
-						<BookShelf books={this.props.books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
-					</div>
+				{/* displays want to read shelf*/}
+				<Route path={path[2]} render={() => (
+					<Shelves path={path[2]} books={books} updateBooks={updateBooks}/>
 				)} />
-				<Route path={'/shelf/read'} render={() => (
-					<div className='book-shelves'>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'wantToRead'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'three'}/>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'currentlyReading'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'two'}/>
-						<BookShelf books={books} updateBooks={updateBooks} shelfName={'read'} setActive={this.setActive} onNavigate={this.props.onNavigate} position={'one'}/>
-					</div>
+				{/* displays read shelf*/}
+				<Route path={path[3]} render={() => (
+					<Shelves path={path[3]} books={books} updateBooks={updateBooks}/>
 				)} />
-
 			</div>
 		)
-	}
 }
 
 export default MainPage;
