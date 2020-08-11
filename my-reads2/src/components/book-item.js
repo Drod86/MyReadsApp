@@ -41,8 +41,8 @@ class BookItem extends Component {
 		const { book, updateBooks } = this.props
 		const { shelf, displayLong } = this.state
 		return(
-			<div className='book-item-shell'>
-				<div className='book-item'>
+			<div className='book-item-shell' >
+				<div className={`book-item ${shelf}`}>
 					{(shelf === 'currentlyReading') && <ProgressMeter book={book}/> /* if the book is on the currently reading shelf it will have a progress bar*/}
 					<img className='book-img' alt={book.title} src={(book.imageLinks) ? book.imageLinks.smallThumbnail : '' /*Book Image*/}/>
 					<h4 className='book-title'>{book.title}</h4>
